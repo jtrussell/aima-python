@@ -35,6 +35,7 @@ class MDP:
         self.transitions = transitions
         self.gamma = gamma
         self.reward = {}
+        self.iters_ =  0
 
     def R(self, state):
         """Return a numeric reward for this state."""
@@ -121,7 +122,9 @@ def value_iteration(mdp, epsilon=0.001):
     """Solving an MDP by value iteration. [Figure 17.4]"""
     U1 = {s: 0 for s in mdp.states}
     R, T, gamma = mdp.R, mdp.T, mdp.gamma
+    mdp.iters_ = 0
     while True:
+        mdp.iters_  = mdp.iters_ + 1
         U = U1.copy()
         delta = 0
         for s in mdp.states:
@@ -152,7 +155,9 @@ def policy_iteration(mdp):
     """Solve an MDP by policy iteration [Figure 17.7]"""
     U = {s: 0 for s in mdp.states}
     pi = {s: random.choice(mdp.actions(s)) for s in mdp.states}
+    mdp.iters_ = 0
     while True:
+        mdp.iters_ = mdp.iters_ + 1
         U = policy_evaluation(pi, U, mdp)
         unchanged = True
         for s in mdp.states:
