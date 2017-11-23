@@ -173,6 +173,13 @@ class QLearningAgent:
         assumes the percept to be of type (state, reward)'''
         return percept
 
+    def get_utilities(self):
+        U = defaultdict(lambda: -1000.)
+        for state_action, value in self.Q.items():
+            state, action = state_action
+            if U[state] < value:
+                        U[state] = value
+        return U
 
 def run_single_trial(agent_program, mdp):
     ''' Execute trial for given agent_program
